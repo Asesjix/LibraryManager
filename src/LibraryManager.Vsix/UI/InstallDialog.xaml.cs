@@ -35,7 +35,7 @@ namespace Microsoft.Web.LibraryManager.Vsix.UI
             }
         }
 
-        public InstallDialogViewModel ViewModel
+        internal InstallDialogViewModel ViewModel
         {
             get { return DataContext as InstallDialogViewModel; }
             set { DataContext = value; }
