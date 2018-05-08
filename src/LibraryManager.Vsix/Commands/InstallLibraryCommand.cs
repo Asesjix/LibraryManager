@@ -36,7 +36,7 @@ namespace Microsoft.Web.LibraryManager.Vsix
 
             ProjectItem item = VsHelpers.DTE.SelectedItems.Item(1)?.ProjectItem;
 
-            if (item?.ContainingProject == null || !item.ContainingProject.IsSupported())
+            if (item?.ContainingProject == null)
             {
                 return;
             }
