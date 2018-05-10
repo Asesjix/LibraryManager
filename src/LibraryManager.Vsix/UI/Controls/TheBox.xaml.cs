@@ -10,7 +10,7 @@ using Microsoft.Web.LibraryManager.Contracts;
 
 namespace Microsoft.Web.LibraryManager.Vsix.UI.Controls
 {
-    internal partial class TheBox : INotifyPropertyChanged
+    public partial class TheBox : INotifyPropertyChanged
     {
         public static readonly DependencyProperty CaretIndexProperty = DependencyProperty.Register(
             nameof(CaretIndex), typeof(int), typeof(TheBox), new PropertyMetadata(default(int), SearchCriteriaChanged));
@@ -45,7 +45,7 @@ namespace Microsoft.Web.LibraryManager.Vsix.UI.Controls
 
         public bool HasItems => Items.Count > 0;
 
-        internal ObservableCollection<Completion> Items { get; } = new ObservableCollection<Completion>();
+        public ObservableCollection<Completion> Items { get; } = new ObservableCollection<Completion>();
 
         public Func<string, int, Task<CompletionSet>> SearchService
         {
