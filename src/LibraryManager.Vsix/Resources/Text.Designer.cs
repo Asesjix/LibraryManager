@@ -61,6 +61,15 @@ namespace Microsoft.Web.LibraryManager.Vsix.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Client-Side Library.
+        /// </summary>
+        public static string AddClientSideLibrary {
+            get {
+                return ResourceManager.GetString("AddClientSideLibrary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check for updates.
         /// </summary>
         public static string CheckForUpdates {
