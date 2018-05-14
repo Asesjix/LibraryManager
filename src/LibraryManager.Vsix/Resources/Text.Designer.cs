@@ -115,6 +115,24 @@ namespace Microsoft.Web.LibraryManager.Vsix.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Files:.
+        /// </summary>
+        public static string Files {
+            get {
+                return ResourceManager.GetString("Files", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LibraryId:.
+        /// </summary>
+        public static string LibraryId {
+            get {
+                return ResourceManager.GetString("LibraryId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Restore completed. Files already up-to-date.
         /// </summary>
         public static string LibraryRestoredNoChange {
@@ -214,6 +232,15 @@ namespace Microsoft.Web.LibraryManager.Vsix.Resources {
         public static string PackagesCouldNotBeLoaded {
             get {
                 return ResourceManager.GetString("PackagesCouldNotBeLoaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Provider: .
+        /// </summary>
+        public static string Provider {
+            get {
+                return ResourceManager.GetString("Provider", resourceCulture);
             }
         }
         

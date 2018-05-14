@@ -189,4 +189,13 @@ Do you want to continue?</value>
   <data name="Nuget_UninstallingPackage" xml:space="preserve">
     <value>Uninstalling NuGet package...</value>
   </data>
+  <data name="Files" xml:space="preserve">
+    <value>Files:</value>
+  </data>
+  <data name="LibraryId" xml:space="preserve">
+    <value>LibraryId:</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>Provider: </value>
+  </data>
 </root>
