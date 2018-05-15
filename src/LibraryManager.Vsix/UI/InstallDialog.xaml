@@ -1,9 +1,9 @@
 ﻿<controls:ThemedWindow x:Class="Microsoft.Web.LibraryManager.Vsix.UI.InstallDialog"
                        x:ClassModifier="internal"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                        xmlns:resources="clr-namespace:Microsoft.Web.LibraryManager.Vsix.Resources"
                        xmlns:controls="clr-namespace:Microsoft.Web.LibraryManager.Vsix.UI.Controls"
                        xmlns:models="clr-namespace:Microsoft.Web.LibraryManager.Vsix.UI.Models"
@@ -23,6 +23,7 @@
             <RowDefinition Height="32" />
             <RowDefinition Height="32" />
             <RowDefinition />
+            <RowDefinition Height="32" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
@@ -37,7 +38,10 @@
             <AccessText Text="{x:Static resources:Text.SelectPackageToSelectFilesToInstall}" />
         </Label>
 
-        <Grid Grid.Row="3" Grid.Column="0" Margin="0 10" Grid.ColumnSpan="4">
+        <Label Grid.Row="3" Grid.Column="0"  Name="TargetLocation" Margin="10 0" Content="{x:Static resources:Text.TargetLocation}"/>
+        <controls:TheBox Grid.Row="3" Grid.Column="1" x:Name="DestinationFolder" Margin="0 0 10 0" VerticalAlignment="Center" SearchService="TargetLocationSearch" Text="{Binding Path=PackageId, Mode=OneWayToSource}"/>
+        
+        <Grid Grid.Row="4" Grid.Column="0" Margin="0 10" Grid.ColumnSpan="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="auto" />

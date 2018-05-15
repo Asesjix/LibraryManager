@@ -198,4 +198,7 @@ Do you want to continue?</value>
   <data name="Provider" xml:space="preserve">
     <value>Provider: </value>
   </data>
+  <data name="TargetLocation" xml:space="preserve">
+    <value>Target Location:</value>
+  </data>
 </root>

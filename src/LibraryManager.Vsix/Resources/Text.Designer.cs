@@ -254,6 +254,15 @@ namespace Microsoft.Web.LibraryManager.Vsix.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Target Location:.
+        /// </summary>
+        public static string TargetLocation {
+            get {
+                return ResourceManager.GetString("TargetLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;Type to search&gt;.
         /// </summary>
         public static string TypeToSearch {
