@@ -8,7 +8,9 @@
                        xmlns:controls="clr-namespace:Microsoft.Web.LibraryManager.Vsix.UI.Controls"
                        xmlns:models="clr-namespace:Microsoft.Web.LibraryManager.Vsix.UI.Models"
                        mc:Ignorable="d" d:DataContext="{d:DesignInstance IsDesignTimeCreatable=False, Type=models:InstallDialogViewModel}"
-        Title="Install Client-Side Library" Height="300.2" Width="498.674" PreviewMouseDown="ThemedWindow_PreviewMouseDown">
+                       Title="{x:Static resources:Text.AddClientSideLibrary}"
+                       Height="300.2" Width="498.674"
+                       PreviewMouseDown="ThemedWindow_PreviewMouseDown">
     <controls:ThemedWindow.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </controls:ThemedWindow.Resources>
@@ -27,10 +29,12 @@
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0"  Name="Provider" Margin="10 0" Content="{x:Static resources:Text.Provider}"/>
-        <ComboBox Grid.Row="0" Grid.Column="1" Margin="2 0" VerticalAlignment="Center" SelectedIndex="0" DisplayMemberPath="Id" SelectedItem="{Binding SelectedProvider, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Providers}"/>
-        <Label Grid.Row="0" Grid.Column="2" Name="LibraryId" Margin="2 0" Content="{x:Static resources:Text.LibraryId}"/>
-        <controls:TheBox Grid.Row="0" Grid.Column="3" x:Name="cbName" Margin="0 0 10 0" VerticalAlignment="Center" SearchService="PerformSearch" Text="{Binding Path=PackageId, Mode=OneWayToSource}"/>
+        <DockPanel Grid.Row="0" Grid.ColumnSpan="4" HorizontalAlignment="Stretch" Margin="10 0 10 0">
+            <Label Name="Provider" Content="{x:Static resources:Text.Provider}" VerticalAlignment="Center" Width="60"/>
+            <ComboBox VerticalAlignment="Center" SelectedIndex="0" DisplayMemberPath="Id" SelectedItem="{Binding SelectedProvider, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Providers}" Width="65"/>
+            <Label Name="LibraryId" Content="{x:Static resources:Text.LibraryId}" VerticalAlignment="Center" Width="60"/>
+            <controls:TheBox x:Name="cbName" VerticalAlignment="Center" DockPanel.Dock="Right" SearchService="PerformSearch" Text="{Binding Path=PackageId, Mode=OneWayToSource}"/>
+        </DockPanel>
 
         <Label Grid.Row="1" Grid.Column="0"  Name="Files" Margin="10 0" Content="{x:Static resources:Text.Files}"/>
         <controls:PackageContentsTreeView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Margin="10 0" FocusVisualStyle="{x:Null}" />
@@ -38,9 +42,11 @@
             <AccessText Text="{x:Static resources:Text.SelectPackageToSelectFilesToInstall}" />
         </Label>
 
-        <Label Grid.Row="3" Grid.Column="0"  Name="TargetLocation" Margin="10 0" Content="{x:Static resources:Text.TargetLocation}"/>
-        <controls:TheBox Grid.Row="3" Grid.Column="1" x:Name="DestinationFolder" Margin="0 0 10 0" VerticalAlignment="Center" SearchService="TargetLocationSearch" Text="{Binding Path=PackageId, Mode=OneWayToSource}"/>
-        
+        <DockPanel Grid.Row="3" Grid.ColumnSpan="4" Margin="10 7 10 0">
+            <Label Name="TargetLocation" Content="{x:Static resources:Text.TargetLocation}" VerticalAlignment="Center"/>
+            <controls:TheBox x:Name="DestinationFolder" VerticalAlignment="Center" SearchService="TargetLocationSearch" Text="{Binding Path=PackageId, Mode=OneWayToSource}"/>
+        </DockPanel>
+
         <Grid Grid.Row="4" Grid.Column="0" Margin="0 10" Grid.ColumnSpan="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />

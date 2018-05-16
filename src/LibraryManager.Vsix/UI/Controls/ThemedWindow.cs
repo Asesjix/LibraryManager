@@ -6,6 +6,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Shapes;
 using EnvDTE;
 using Microsoft.VisualStudio.PlatformUI;
@@ -151,7 +152,7 @@ namespace Microsoft.Web.LibraryManager.Vsix.UI.Controls
             header.ColumnDefinitions.Add(new ColumnDefinition {Width = GridLength.Auto});
             header.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
 
-            //Move grip containing the icon and title
+            //Move grip containing title
             Grid moveGrip = new Grid();
             moveGrip.ColumnDefinitions.Add(new ColumnDefinition
             {
@@ -162,25 +163,12 @@ namespace Microsoft.Web.LibraryManager.Vsix.UI.Controls
             moveGrip.SetValue(Grid.ColumnProperty, 0);
             moveGrip.MouseLeftButtonDown += TitleBarLeftMouseButtonDown;
 
-            Image icon = new Image
+            Label label = new Label
             {
                 VerticalAlignment = VerticalAlignment.Center,
                 Margin = new Thickness(10, 5, 4, 0)
             };
-            icon.SetBinding(Image.SourceProperty, new Binding
-            {
-                Source = this,
-                Path = new PropertyPath("Icon"),
-                Mode = BindingMode.OneWay
-            });
-            moveGrip.Children.Add(icon);
-
-            Label label = new Label
-            {
-                VerticalAlignment = VerticalAlignment.Center,
-                Margin = new Thickness(0, 2, 0, 0)
-            };
-            label.SetValue(Grid.ColumnProperty, 1);
+            label.SetValue(Grid.ColumnProperty, 0);
             label.SetBinding(ContentControl.ContentProperty, new Binding
             {
                 Source = this,

@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Microsoft.VisualStudio.Imaging;
 using Microsoft.VisualStudio.Text;
 using Microsoft.Web.LibraryManager.Contracts;
 using Microsoft.Web.LibraryManager.Vsix.UI.Models;
@@ -121,9 +120,6 @@ namespace Microsoft.Web.LibraryManager.Vsix.UI
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            Icon = WpfUtil.GetIconForImageMoniker(KnownMonikers.JSWebScript, 16, 16);
-            Title = Vsix.Name;
-
             ViewModel = new InstallDialogViewModel(Dispatcher, _configFileName, _deps, _folder, CloseDialog);
 
             FocusManager.SetFocusedElement(cbName, cbName);
