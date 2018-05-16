@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.VisualStudio.Text;
 using Microsoft.Web.LibraryManager.Contracts;
+using Microsoft.Web.LibraryManager.Vsix.Resources;
 using Microsoft.Web.LibraryManager.Vsix.UI.Models;
 
 namespace Microsoft.Web.LibraryManager.Vsix.UI
@@ -16,6 +17,7 @@ namespace Microsoft.Web.LibraryManager.Vsix.UI
         private readonly IDependencies _deps;
         private readonly string _folder;
         private readonly string _configFileName;
+        private string _helpText;
 
         public InstallDialog(IDependencies dependencies, string configFileName, string folder)
         {
@@ -78,6 +80,22 @@ namespace Microsoft.Web.LibraryManager.Vsix.UI
             span.Completions = completionItems;
 
             return Task.FromResult(span);
+        }
+
+        public string HelpText
+        {
+            get { return _helpText; }
+            set
+            {
+                if (String.Equals(value, "cdnjs"))
+                {
+                    _helpText = Text.CdnjsLibraryIdHintText;
+                }
+                else if (String.Equals(value, "filesystem"))
+                {
+                    _helpText = Text.FileSystemLibraryIdHintText;
+                }
+            }
         }
 
         private IEnumerable<Tuple<string, string>> GetCompletions(string cwd, string value, int caretPosition, out Span span)

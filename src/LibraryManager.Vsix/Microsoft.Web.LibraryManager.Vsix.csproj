@@ -112,6 +112,7 @@
     <Compile Include="Json\SuggestedActions\UpdateSuggestedActionSet.cs" />
     <Compile Include="Json\SuggestedActions\UninstallSuggestedActions.cs" />
     <Compile Include="Json\SuggestedActions\SuggestedActionProvider.cs" />
+    <Compile Include="UI\HintTextConverter.cs" />
     <Compile Include="Shared\Telemetry.cs" />
     <Compile Include="Json\Completion\BaseCompletionProvider.cs" />
     <Compile Include="Json\Completion\FilesCompletionProvider.cs" />

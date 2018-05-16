@@ -70,6 +70,15 @@ namespace Microsoft.Web.LibraryManager.Vsix.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Example: &lt;library&gt;@&lt;version&gt;.
+        /// </summary>
+        public static string CdnjsLibraryIdHintText {
+            get {
+                return ResourceManager.GetString("CdnjsLibraryIdHintText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check for updates.
         /// </summary>
         public static string CheckForUpdates {
@@ -129,6 +138,15 @@ namespace Microsoft.Web.LibraryManager.Vsix.Resources {
         public static string Files {
             get {
                 return ResourceManager.GetString("Files", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Must be a valid filesystem path..
+        /// </summary>
+        public static string FileSystemLibraryIdHintText {
+            get {
+                return ResourceManager.GetString("FileSystemLibraryIdHintText", resourceCulture);
             }
         }
         
