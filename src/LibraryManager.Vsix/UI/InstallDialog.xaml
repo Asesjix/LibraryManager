@@ -26,7 +26,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="32" />
             <RowDefinition Height="auto" />
-            <RowDefinition Height="32" />
             <RowDefinition />
             <RowDefinition Height="32" />
             <RowDefinition Height="auto" />
@@ -39,20 +38,19 @@
             <controls:TheBox x:Name="cbName" VerticalAlignment="Center" DockPanel.Dock="Right" SearchService="PerformSearch" Text="{Binding Path=PackageId, Mode=OneWayToSource}"/>
         </DockPanel>
 
-        <Label x:Name="Example" Grid.Row="1"  Grid.Column="1" Content="{Binding ElementName=ProviderCb, Path=SelectedItem, Converter={StaticResource HintTextConverter}}" Grid.ColumnSpan="3" Margin="138,0,80,0" />
+        <Label x:Name="Example" Grid.Row="1"  Grid.Column="1" Content="{Binding ElementName=ProviderCb, Path=SelectedItem, Converter={StaticResource HintTextConverter}}" Grid.ColumnSpan="3" Margin="194,0,80,0"  />
 
-        <Label Grid.Row="2" Grid.Column="0"  Name="Files" Margin="10 0" Content="{x:Static resources:Text.Files}"/>
-        <controls:PackageContentsTreeView Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="10 0" FocusVisualStyle="{x:Null}" />
-        <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity=".5" Visibility="{Binding Path=IsTreeViewEmpty, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+        <controls:PackageContentsTreeView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Margin="10 0" FocusVisualStyle="{x:Null}" />
+        <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity=".5" Visibility="{Binding Path=IsTreeViewEmpty, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
             <AccessText Text="{x:Static resources:Text.SelectPackageToSelectFilesToInstall}" />
         </Label>
 
-        <DockPanel Grid.Row="4" Grid.ColumnSpan="4" Margin="10 7 10 0">
+        <DockPanel Grid.Row="3" Grid.ColumnSpan="4" Margin="10 7 10 0">
             <Label Name="TargetLocation" Content="{x:Static resources:Text.TargetLocation}" VerticalAlignment="Center"/>
             <controls:TheBox x:Name="DestinationFolder" VerticalAlignment="Center" SearchService="TargetLocationSearch" Text="{Binding Path=PackageId, Mode=OneWayToSource}"/>
         </DockPanel>
 
-        <Grid Grid.Row="5" Grid.Column="0" Margin="0 10" Grid.ColumnSpan="4">
+        <Grid Grid.Row="4" Grid.Column="0" Margin="0 10" Grid.ColumnSpan="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="auto" />

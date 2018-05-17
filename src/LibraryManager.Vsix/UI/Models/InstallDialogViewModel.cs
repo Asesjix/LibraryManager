@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Microsoft.Web.LibraryManager.Contracts;
+using Microsoft.Web.LibraryManager.Vsix.Resources;
 
 namespace Microsoft.Web.LibraryManager.Vsix.UI.Models
 {
@@ -65,7 +66,16 @@ namespace Microsoft.Web.LibraryManager.Vsix.UI.Models
 
         public IReadOnlyList<PackageItem> DisplayRoots
         {
-            get { return _displayRoots; }
+            get
+            {
+                if (_displayRoots != null && _displayRoots.Any())
+                {
+                   _displayRoots.ElementAt(0).Name = Text.Files;
+                }
+
+                return _displayRoots;
+            }
+
             set { Set(ref _displayRoots, value); }
         }
 
