@@ -21,6 +21,11 @@ namespace Microsoft.Web.LibraryManager.Vsix.UI
 
         public InstallDialog(IDependencies dependencies, string configFileName, string folder)
         {
+            if (!String.IsNullOrWhiteSpace(folder))
+            {
+                InstallationFolder.DestinationFolder = Path.GetFileName(folder.TrimEnd('\\')) + "/";
+            }
+
             InitializeComponent();
 
             _deps = dependencies;

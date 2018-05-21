@@ -24,40 +24,44 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="32" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition />
-            <RowDefinition Height="32" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
         <DockPanel Grid.Row="0" Grid.ColumnSpan="4" HorizontalAlignment="Stretch" Margin="10 0 10 0">
-            <Label Name="Provider" Content="{x:Static resources:Text.Provider}" VerticalAlignment="Center" Width="60"/>
-            <ComboBox x:Name="ProviderCb" VerticalAlignment="Center" SelectedIndex="0" DisplayMemberPath="Id" SelectedItem="{Binding SelectedProvider, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Providers}" Width="65"/>
-            <Label Name="LibraryId" Content="{x:Static resources:Text.LibraryId}" VerticalAlignment="Center" Width="60"/>
+            <Label Name="Provider" Content="{x:Static resources:Text.Provider}" VerticalAlignment="Center" Width="Auto"/>
+            <ComboBox x:Name="ProviderCb" SelectedIndex="0" DisplayMemberPath="Id" SelectedItem="{Binding SelectedProvider, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Providers}" VerticalAlignment="Center" Width="Auto"/>
+        </DockPanel>
+
+        <DockPanel Grid.Row="1" Grid.ColumnSpan="4" HorizontalAlignment="Stretch" Margin="10 0 10 0">
+            <Label Name="LibraryId" Content="{x:Static resources:Text.LibraryId}" VerticalAlignment="Center" HorizontalAlignment="Center" Width="Auto"/>
             <controls:TheBox x:Name="cbName" VerticalAlignment="Center" DockPanel.Dock="Right" SearchService="PerformSearch" Text="{Binding Path=PackageId, Mode=OneWayToSource}"/>
         </DockPanel>
 
-        <Label x:Name="Example" Grid.Row="1"  Grid.Column="1" Content="{Binding ElementName=ProviderCb, Path=SelectedItem, Converter={StaticResource HintTextConverter}}" Grid.ColumnSpan="3" Margin="194,0,80,0"  />
+        <Label x:Name="Example" Grid.Row="2" Grid.ColumnSpan="4" Content="{Binding ElementName=ProviderCb, Path=SelectedItem, Converter={StaticResource HintTextConverter}}" Margin="68,0,0,0" />
 
-        <controls:PackageContentsTreeView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Margin="10 0" FocusVisualStyle="{x:Null}" />
-        <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity=".5" Visibility="{Binding Path=IsTreeViewEmpty, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+        <controls:PackageContentsTreeView Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="10 0 10 0" FocusVisualStyle="{x:Null}" />
+        <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity=".5" Visibility="{Binding Path=IsTreeViewEmpty, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
             <AccessText Text="{x:Static resources:Text.SelectPackageToSelectFilesToInstall}" />
         </Label>
 
-        <DockPanel Grid.Row="3" Grid.ColumnSpan="4" Margin="10 7 10 0">
-            <Label Name="TargetLocation" Content="{x:Static resources:Text.TargetLocation}" VerticalAlignment="Center"/>
-            <controls:TheBox x:Name="DestinationFolder" VerticalAlignment="Center" SearchService="TargetLocationSearch" Text="{Binding Path=PackageId, Mode=OneWayToSource}"/>
+        <DockPanel Grid.Row="4" Grid.ColumnSpan="4" Margin="10 0 10 0">
+            <Label Name="TargetLocation" Content="{x:Static resources:Text.TargetLocation}" VerticalAlignment="Center" HorizontalAlignment="Center" Width="Auto"/>
+            <controls:TargetLocation x:Name="DestinationFolder" VerticalAlignment="Center" SearchService="TargetLocationSearch" Text="{Binding Path=PackageId, Mode=OneWayToSource}"/>
         </DockPanel>
 
-        <Grid Grid.Row="4" Grid.Column="0" Margin="0 10" Grid.ColumnSpan="4">
+        <Grid Grid.Row="5" Grid.Column="0" Margin="0 10" Grid.ColumnSpan="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" Content="Install" HorizontalAlignment="Right" Margin="10 0" VerticalAlignment="Center" Width="75" IsDefault="True" Command="{Binding InstallPackageCommand}" />
-            <Button Grid.Column="2" Content="Cancel" HorizontalAlignment="Right" Margin="0 0 10 0" VerticalAlignment="Center" Width="75" IsCancel="True" />
+            <Button Grid.Column="1" Content="Install" VerticalAlignment="Center" Width="Auto" HorizontalAlignment="Right" Margin="10 0" IsDefault="True" Command="{Binding InstallPackageCommand}" />
+            <Button Grid.Column="2" Content="Cancel" VerticalAlignment="Center" Width="Auto" HorizontalAlignment="Right" Margin="0 0 10 0" IsCancel="True" />
         </Grid>
 
     </Grid>

@@ -112,6 +112,9 @@
     <Compile Include="Json\SuggestedActions\UpdateSuggestedActionSet.cs" />
     <Compile Include="Json\SuggestedActions\UninstallSuggestedActions.cs" />
     <Compile Include="Json\SuggestedActions\SuggestedActionProvider.cs" />
+    <Compile Include="UI\Controls\TargetLocation.xaml.cs">
+      <DependentUpon>TargetLocation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\HintTextConverter.cs" />
     <Compile Include="Shared\Telemetry.cs" />
     <Compile Include="Json\Completion\BaseCompletionProvider.cs" />
@@ -141,6 +144,7 @@
       <DependentUpon>source.extension.vsixmanifest</DependentUpon>
     </Compile>
     <Compile Include="Shared\WpfUtil.cs" />
+    <Compile Include="UI\Models\InstallationFolder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -373,6 +377,10 @@
     <Page Include="UI\Controls\EditorTooltip.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Controls\TargetLocation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup Condition="$(DefineConstants.Contains(UI_ENABLED))">
