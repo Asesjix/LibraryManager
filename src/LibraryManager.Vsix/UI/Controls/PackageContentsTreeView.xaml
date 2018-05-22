@@ -12,9 +12,10 @@
         <converters:PackageItemIconConverter x:Key="IconConverter" />
         <converters:VisibleIfNonNullConverter x:Key="VisibleIfNonNullConverter" />
     </UserControl.Resources>
-    <TreeView ItemsSource="{Binding Path=DisplayRoots, Mode=OneWay}" VirtualizingPanel.IsVirtualizing="True">
+    <TreeView ItemsSource="{Binding Path=DisplayRoots, Mode=OneWay}" VirtualizingPanel.IsVirtualizing="True" KeyboardNavigation.TabNavigation="Continue">
         <TreeView.ItemContainerStyle>
             <Style TargetType="{x:Type TreeViewItem}" d:DataContext="{d:DesignInstance Type=TreeViewItem, IsDesignTimeCreatable=False}">
+                <Setter Property="KeyboardNavigation.TabNavigation" Value="Once"/>
                 <Setter Property="IsExpanded" Value="{Binding Path=IsExpanded, Mode=TwoWay}" />
                 <Setter Property="Focusable" Value="False" />
             </Style>

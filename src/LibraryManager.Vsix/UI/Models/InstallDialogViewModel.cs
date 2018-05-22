@@ -275,7 +275,7 @@ namespace Microsoft.Web.LibraryManager.Vsix.UI.Models
                 {
                     LibraryId = PackageId,
                     ProviderId = selectedPackage.ProviderId,
-                    DestinationPath = targetPath,
+                    DestinationPath = InstallationFolder.DestinationFolder,
                     Files = SelectedFiles.ToList()
                 });
 

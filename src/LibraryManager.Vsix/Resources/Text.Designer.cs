@@ -142,7 +142,7 @@ namespace Microsoft.Web.LibraryManager.Vsix.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Must be a valid filesystem path..
+        ///   Looks up a localized string similar to Note: Must be a valid filesystem path..
         /// </summary>
         public static string FileSystemLibraryIdHintText {
             get {

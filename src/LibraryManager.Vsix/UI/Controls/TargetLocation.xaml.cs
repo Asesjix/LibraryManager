@@ -84,13 +84,14 @@ namespace Microsoft.Web.LibraryManager.Vsix.UI.Controls
                 }
 
                 TargetLocationSearchTb.Text = _text;
+                InstallationFolder.DestinationFolder = _text;
+                OnPropertyChanged("Text");
 
                 return _text;
             }
             set
             {
                 SetValue(TextProperty, value);
-                OnPropertyChanged("Text");
             }
         }
 

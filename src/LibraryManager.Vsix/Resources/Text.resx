@@ -209,6 +209,6 @@ Do you want to continue?</value>
     <value>Example: &lt;library&gt;@&lt;version&gt;</value>
   </data>
   <data name="FileSystemLibraryIdHintText" xml:space="preserve">
-    <value>Must be a valid filesystem path.</value>
+    <value>Note: Must be a valid filesystem path.</value>
   </data>
 </root>
