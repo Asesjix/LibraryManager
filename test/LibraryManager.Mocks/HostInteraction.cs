@@ -88,7 +88,7 @@ namespace Microsoft.Web.LibraryManager.Mocks
         /// </summary>
         /// <param name="relativeFilePaths">The absolute path to the file.</param>
         /// <param name="cancellationToken"></param>
-        public virtual Task<bool> DeleteFilesAsync(IEnumerable<string> relativeFilePaths, CancellationToken cancellationToken)
+        public Task<bool> DeleteFilesAsync(IEnumerable<string> relativeFilePaths, CancellationToken cancellationToken, bool deleteEmptyFolders)
         {
             foreach (var path in relativeFilePaths)
             {
@@ -99,7 +99,18 @@ namespace Microsoft.Web.LibraryManager.Mocks
             return Task.FromResult<bool>(true);
         }
 
-        public Task<bool> DeleteFilesAsync(IEnumerable<string> relativeFilePaths, CancellationToken cancellationToken, bool deleteCleanFolders = true)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task<Stream> ReadFileAsync(string filePath, CancellationToken cancellationToken)
+        {
+            return await FileHelpers.ReadFileAsStreamAsync(filePath, cancellationToken);
+        }
+
+        public Task<bool> CopyFileAsync(string path, Func<string> sourcePath, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

@@ -48,15 +48,9 @@ namespace Microsoft.Web.LibraryManager.Vsix
 
                 VsHelpers.CheckFileOutOfSourceControl(absolutePath.FullName);
 
-                using (FileStream writer = File.Create(absolutePath.FullName, 4096, FileOptions.Asynchronous))
-                {
-                    if (stream.CanSeek)
-                    {
-                        stream.Seek(0, SeekOrigin.Begin);
-                    }
+                
+                await FileHelpers.WriteToFileAsync(absolutePath.FullName, stream, cancellationToken);
 
-                    await stream.CopyToAsync(writer, 8192, cancellationToken).ConfigureAwait(false);
-                }
             }
 
             Logger.Log(string.Format(LibraryManager.Resources.Text.FileWrittenToDisk, relativePath.Replace(Path.DirectorySeparatorChar, '/')), LogLevel.Operation);
@@ -71,52 +65,51 @@ namespace Microsoft.Web.LibraryManager.Vsix
                 return false;
             }
 
-            List<Task<bool>> deleteFilesTasks = new List<Task<bool>>();
-            List<Task<bool>> deleteFoldersTasks = new List<Task<bool>>();
-            HashSet<string> directories = new HashSet<string>();
+            await Task.Run(() => {
 
-            foreach (string relativeFilePath in relativeFilePaths)
-            {
-                string absoluteFile = new FileInfo(Path.Combine(WorkingDirectory, relativeFilePath)).FullName;
+                HashSet<string> directories = new HashSet<string>();
 
-                if (cancellationToken.IsCancellationRequested)
+                foreach (string relativeFilePath in relativeFilePaths)
                 {
-                    cancellationToken.ThrowIfCancellationRequested();
-                }
+                    string absoluteFile = new FileInfo(Path.Combine(WorkingDirectory, relativeFilePath)).FullName;
 
-                if (File.Exists(absoluteFile))
-                {
-                    deleteFilesTasks.Add(DeleteFileAsync(absoluteFile));
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                    }
+
+                    if (File.Exists(absoluteFile))
+                    {
+                        DeleteFileAsync(absoluteFile);
+                    }
+
+                    if (deleteCleanFolders)
+                    {
+                        string directoryPath = Path.GetDirectoryName(absoluteFile);
+                        if (Directory.Exists(directoryPath))
+                        {
+                            if (!directories.Contains(directoryPath))
+                            {
+                                directories.Add(directoryPath);
+                                // TO DO : replace for DeleteFolder that also calls 
+                                // DeleteFolderFromProject as needed
+                            }
+                        }
+                    }
                 }
 
                 if (deleteCleanFolders)
                 {
-                    string directoryPath = Path.GetDirectoryName(absoluteFile);
-                    if (Directory.Exists(directoryPath))
-                    {
-                        if (!directories.Contains(directoryPath))
-                        {
-                            directories.Add(directoryPath);
-                            // TO DO : replace for DeleteFolder that also calls 
-                            // DeleteFolderFromProject as needed
-                            deleteFoldersTasks.Add(DeleteFolderFromDisk(directoryPath));
-                        }
-                    }
+                    FileHelpers.DeleteEmptyFoldersFromDisk(directories);
                 }
-            }
 
-            await Task.WhenAll(deleteFilesTasks);
+            });
+            
 
-            if (deleteCleanFolders)
-            {
-                await Task.WhenAll(deleteFoldersTasks);
-            }
-
-            return deleteFilesTasks.All(t => t.Result);
+            return true;
         }
 
-        // TO DO: Move to the FileSystemHelpers
-        private async Task<bool> DeleteFileAsync(string filePath)
+        private bool DeleteFileAsync(string filePath)
         {
             ProjectItem item = VsHelpers.DTE.Solution.FindProjectItem(filePath);
             Project project = item?.ContainingProject;
@@ -124,11 +117,11 @@ namespace Microsoft.Web.LibraryManager.Vsix
 
             if (project != null)
             {
-                deleteSucceeded = await DeleteFileFromProject(item);
+                deleteSucceeded = VsHelpers.DeleteFileFromProject(item);
             }
             else
             {
-                deleteSucceeded = await DeleteFileFromDisk(filePath);
+                deleteSucceeded = FileHelpers.DeleteFileFromDisk(filePath);
             }
 
             if (deleteSucceeded)
@@ -142,6 +135,7 @@ namespace Microsoft.Web.LibraryManager.Vsix
 
             return deleteSucceeded;
         }
+
         private Task<bool> DeleteFolderFromDisk (string folderPath)
         {
             return Task.Run(() =>
@@ -169,61 +163,45 @@ namespace Microsoft.Web.LibraryManager.Vsix
             return !Directory.EnumerateFileSystemEntries(path).Any();
         }
 
-        private Task<bool> DeleteFileFromDisk(string filePath)
+        public Task<Stream> ReadFileAsync(string filePath, CancellationToken cancellationToken)
         {
-            return Task.Run(() =>
-            {
-                try
-                {
-                    FileInfo fileInfo = new FileInfo(filePath);
-                    if (fileInfo.Exists)
-                    {
-                        VsHelpers.CheckFileOutOfSourceControl(filePath);
-                        File.Delete(filePath);
-                    }
-
-                    return true;
-                }
-                catch (Exception)
-                {
-                    // Add telemetry here
-                    return false;
-                }
-            });
+            return FileHelpers.ReadFileAsStreamAsync(filePath, cancellationToken);
         }
 
-        // TO DO: Move to VS helpers
-        private Task<bool> DeleteFileFromProject(ProjectItem projectItem)
+        public Task<bool> CopyFile(string destinationPath, Func<string> sourcePath, CancellationToken cancellationToken)
         {
-            return Task.Run(() =>
+            if (cancellationToken.IsCancellationRequested)
             {
-                if (projectItem != null)
-                {
-                    try
-                    {
-                        projectItem.Delete();
-                        return true;
-                    }
-                    catch (Exception)
-                    {
-                        // TO DO: log Error 
-                        return false;
-                    }
-                }
-
-                return false;
-            });
-        }
-
-        // TO DO: Move to the FileSystemHelpers
-        private bool IsFileUpToDate(FileInfo cacheFile, FileInfo destinationFile)
-        {
-            if (cacheFile.Length != destinationFile.Length || cacheFile.LastWriteTime.CompareTo(destinationFile.LastWriteTime) > 0)
-            {
-                return false;
+                cancellationToken.ThrowIfCancellationRequested();
             }
 
-            return true;
+            try
+            {
+                FileInfo absoluteDestinationFile = new FileInfo(Path.Combine(WorkingDirectory, destinationPath));
+
+                if (absoluteDestinationFile.Exists)
+                {
+                    return Task.FromResult(true);
+                }
+
+                if (!absoluteDestinationFile.FullName.StartsWith(WorkingDirectory))
+                {
+                    throw new UnauthorizedAccessException();
+                }
+
+                absoluteDestinationFile.Directory.Create();
+                string sourceAbsolutePath = sourcePath.Invoke();
+
+                FileHelpers.FileCopy(sourceAbsolutePath, absoluteDestinationFile.FullName);
+
+                Logger.Log(string.Format(LibraryManager.Resources.Text.FileWrittenToDisk, absoluteDestinationFile.FullName.Replace(Path.DirectorySeparatorChar, '/')), LogLevel.Operation);
+
+                return Task.FromResult(true);
+            }
+            catch
+            {
+                return Task.FromResult(false);
+            }
         }
     }
 }

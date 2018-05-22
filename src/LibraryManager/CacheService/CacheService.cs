@@ -59,18 +59,6 @@ namespace Microsoft.Web.LibraryManager
         }
 
         /// <summary>
-        /// Retruns the library content from the provider url and writes to cacheFile
-        /// </summary>
-        /// <param name="url"></param>
-        /// <param name="cacheFile"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public async Task<string> GetLibraryAsync(string url, string cacheFile, CancellationToken cancellationToken)
-        {
-            return await GetResourceAsync(url, cacheFile, _libraryExpiresAfterDays, cancellationToken);
-        }
-
-        /// <summary>
         /// Downloads a resource from specified url to a destination file
         /// </summary>
         /// <param name="url"></param>
@@ -79,8 +67,10 @@ namespace Microsoft.Web.LibraryManager
         /// <returns></returns>
         private async Task DownloadToFileAsync(string url, string fileName, CancellationToken cancellationToken)
         {
-            Stream libraryStream = await _requestHandler.GetStreamAsync(url, cancellationToken);
-            await FileHelpers.WriteToFileAsync(fileName, libraryStream, cancellationToken);
+            using (Stream libraryStream = await _requestHandler.GetStreamAsync(url, cancellationToken))
+            {
+                await FileHelpers.WriteToFileAsync(fileName, libraryStream, cancellationToken);
+            }
         }
 
         private async Task<string> GetResourceAsync(string url, string localFile, int expiration, CancellationToken cancellationToken)
@@ -95,7 +85,7 @@ namespace Microsoft.Web.LibraryManager
                 await DownloadToFileAsync(url, localFile, cancellationToken).ConfigureAwait(false);
             }
 
-            return await FileHelpers.ReadFileTextAsync(localFile, cancellationToken).ConfigureAwait(false);
+            return await FileHelpers.ReadFileAsTextAsync(localFile, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

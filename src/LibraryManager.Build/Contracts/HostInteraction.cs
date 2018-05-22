@@ -74,7 +74,19 @@ namespace Microsoft.Web.LibraryManager.Build
             }
         }
 
-        public Task<bool> DeleteFilesAsync(IEnumerable<string> relativeFilePaths, CancellationToken cancellationToken, bool deleteCleanFolders = true)
+        public Task<bool> DeleteFilesAsync(IEnumerable<string> filePaths, CancellationToken cancellationToken, bool deleteCleanFolders = true)
+        {
+            return Task.Run(() => {
+                return FileHelpers.DeleteFiles(filePaths, cancellationToken, true);
+            });
+        }
+
+        public Task<Stream> ReadFileAsync(string relativeFilePath, CancellationToken cancellationToken)
+        {
+            return FileHelpers.ReadFileAsStreamAsync(relativeFilePath, cancellationToken);
+        }
+
+        public Task<bool> CopyFile(string path, Func<string> sourcePath, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

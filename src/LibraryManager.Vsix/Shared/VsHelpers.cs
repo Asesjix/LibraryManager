@@ -222,6 +222,24 @@ namespace Microsoft.Web.LibraryManager.Vsix
             return false;
         }
 
+        public static bool DeleteFileFromProject(ProjectItem projectItem)
+        {
+            if (projectItem != null)
+            {
+                try
+                {
+                    projectItem.Delete();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            return false;
+        }
+
         public static void SatisfyImportsOnce(this object o)
         {
             _compositionService = _compositionService ?? GetService<SComponentModel, IComponentModel>();

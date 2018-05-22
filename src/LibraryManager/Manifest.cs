@@ -78,7 +78,7 @@ namespace Microsoft.Web.LibraryManager
         {
             if (File.Exists(fileName))
             {
-                string json = await FileHelpers.ReadFileTextAsync(fileName, cancellationToken).ConfigureAwait(false);
+                string json = await FileHelpers.ReadFileAsTextAsync(fileName, cancellationToken).ConfigureAwait(false);
                 return FromJson(json, dependencies);
             }
 

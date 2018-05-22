@@ -97,7 +97,7 @@ namespace Microsoft.Web.LibraryManager.Test
             Assert.IsTrue(results.Count() == 1);
             Assert.IsTrue(results.First().Success);
 
-            ILibraryInstallationResult uninstallResult = await manifest.UninstallAsync(desiredState.LibraryId, (file) => _hostInteraction.DeleteFilesAsync(file, token), token);
+            ILibraryInstallationResult uninstallResult = await manifest.UninstallAsync(desiredState.LibraryId, (file) => _hostInteraction.DeleteFilesAsync(file, token, true), token);
 
             Assert.IsFalse(File.Exists(file1));
             Assert.IsFalse(File.Exists(file2));
@@ -140,7 +140,7 @@ namespace Microsoft.Web.LibraryManager.Test
             Assert.IsTrue(File.Exists(file2));
             Assert.IsTrue(File.Exists(file3));
 
-            IEnumerable<ILibraryInstallationResult> results = await manifest.CleanAsync((file) => _hostInteraction.DeleteFilesAsync(file, token), token);
+            IEnumerable<ILibraryInstallationResult> results = await manifest.CleanAsync((file) => _hostInteraction.DeleteFilesAsync(file, token, true), token);
 
             Assert.IsFalse(File.Exists(file1));
             Assert.IsFalse(File.Exists(file2));
