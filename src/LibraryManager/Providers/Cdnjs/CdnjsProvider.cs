@@ -131,9 +131,7 @@ namespace Microsoft.Web.LibraryManager.Providers.Cdnjs
 
                         string destinationPath = Path.Combine(state.DestinationPath, file);
                         var sourceStream = new Func<Stream>(() => GetStreamAsync(state, file, cancellationToken).Result);
-                        //var sourcePath = new Func<string>(() => GetCacheFileAsync(state, file, cancellationToken));
                         bool writeOk = await HostInteraction.WriteFileAsync(destinationPath, sourceStream, state, cancellationToken).ConfigureAwait(false);
-                        //bool writeOk = await HostInteraction.CopyFile(destinationPath, sourcePath, cancellationToken).ConfigureAwait(false);
 
                         if (!writeOk)
                         {

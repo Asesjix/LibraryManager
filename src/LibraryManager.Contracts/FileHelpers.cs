@@ -36,7 +36,7 @@ namespace Microsoft.Web.LibraryManager.Contracts
             if (directoryPath != null && !string.IsNullOrEmpty(directoryPath))
             {
                 DirectoryInfo dir = Directory.CreateDirectory(directoryPath);
-                using (FileStream destination = File.Open(fileName, FileMode.Create, FileAccess.ReadWrite, FileShare.None))
+                using (FileStream destination = File.Open(fileName, FileMode.Create, FileAccess.Write, FileShare.None))
                 {
                     await sourceStream.CopyToAsync(destination);
 
