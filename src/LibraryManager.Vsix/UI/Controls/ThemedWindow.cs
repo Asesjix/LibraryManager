@@ -66,8 +66,8 @@ namespace Microsoft.Web.LibraryManager.Vsix.UI.Controls
             Border hostContainer = new Border
             {
                 Child = host,
-                //Margin = new Thickness(1, 1, 5, 5),
-                BorderThickness = new Thickness(1)
+                Margin = new Thickness(1, 1, 5, 5),
+                BorderThickness = new Thickness(5, 10, 15, 20)
             };
             hostContainer.SetResourceReference(BorderBrushProperty, EnvironmentColors.MainWindowActiveDefaultBorderBrushKey);
             //hostContainer.Effect = new DropShadowEffect

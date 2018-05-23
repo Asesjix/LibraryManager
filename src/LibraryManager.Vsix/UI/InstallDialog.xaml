@@ -31,27 +31,74 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
+        <Grid.Resources>
+            <Style x:Key="{x:Static SystemParameters.FocusVisualStyleKey}">
+                <Setter Property="Control.Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Rectangle StrokeThickness="1" Stroke="Red" StrokeDashArray="1 2" SnapsToDevicePixels="true" />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Grid.Resources>
 
         <DockPanel Grid.Row="0" Grid.ColumnSpan="4" HorizontalAlignment="Stretch" Margin="10 0 10 0">
             <Label Name="Provider" Content="{x:Static resources:Text.Provider}" VerticalAlignment="Center" Width="Auto"/>
-            <ComboBox x:Name="ProviderCb" SelectedIndex="0" DisplayMemberPath="Id" SelectedItem="{Binding SelectedProvider, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Providers}" VerticalAlignment="Center" Width="Auto" KeyboardNavigation.TabNavigation="Continue"/>
+            <ComboBox x:Name="ProviderCb" 
+                      SelectedIndex="0" 
+                      DisplayMemberPath="Id" 
+                      SelectedItem="{Binding SelectedProvider, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                      ItemsSource="{Binding Providers}" 
+                      VerticalAlignment="Center" 
+                      KeyboardNavigation.TabIndex="1"
+                      Width="Auto" />
         </DockPanel>
 
         <DockPanel Grid.Row="1" Grid.ColumnSpan="4" HorizontalAlignment="Stretch" Margin="10 0 10 0">
             <Label Name="LibraryId" Content="{x:Static resources:Text.LibraryId}" VerticalAlignment="Center" HorizontalAlignment="Center" Width="Auto"/>
-            <controls:TheBox x:Name="cbName" VerticalAlignment="Center" DockPanel.Dock="Right" SearchService="PerformSearch" Text="{Binding Path=PackageId, Mode=OneWayToSource}"/>
+            <controls:TheBox x:Name="cbName" 
+                             VerticalAlignment="Center" 
+                             DockPanel.Dock="Right" 
+                             SearchService="PerformSearch" 
+                             KeyboardNavigation.TabIndex="2"
+                             Text="{Binding Path=PackageId, Mode=OneWayToSource}"/>
         </DockPanel>
 
-        <Label x:Name="Example" Grid.Row="2" Grid.ColumnSpan="4" Content="{Binding ElementName=ProviderCb, Path=SelectedItem, Converter={StaticResource HintTextConverter}}" Margin="68,0,0,0" />
+        <Label x:Name="Example" 
+               Grid.Row="2" 
+               Grid.ColumnSpan="4" 
+               Content="{Binding ElementName=ProviderCb, 
+                                 Path=SelectedItem, 
+                                 Converter={StaticResource HintTextConverter}}" 
+               Margin="68,0,0,0" />
 
-        <controls:PackageContentsTreeView Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="10 0 10 0" FocusVisualStyle="{x:Null}" />
-        <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity=".5" Visibility="{Binding Path=IsTreeViewEmpty, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+        <controls:PackageContentsTreeView Grid.Row="3" 
+                                          Grid.Column="0" 
+                                          Grid.ColumnSpan="4" 
+                                          Margin="10 0 10 0" 
+                                          KeyboardNavigation.TabIndex="3" />
+        <Label Grid.Row="3" 
+               Grid.Column="0" 
+               Grid.ColumnSpan="4" 
+               HorizontalAlignment="Center" 
+               VerticalAlignment="Center" 
+               Opacity=".5" 
+               Visibility="{Binding Path=IsTreeViewEmpty, 
+                                    Mode=OneWay, 
+                                    Converter={StaticResource BoolToVisibilityConverter}}">
             <AccessText Text="{x:Static resources:Text.SelectPackageToSelectFilesToInstall}" />
         </Label>
 
         <DockPanel Grid.Row="4" Grid.ColumnSpan="4" Margin="10 0 10 0">
-            <Label Name="TargetLocation" Content="{x:Static resources:Text.TargetLocation}" VerticalAlignment="Center" HorizontalAlignment="Center" Width="Auto"/>
-            <controls:TargetLocation x:Name="DestinationFolder" VerticalAlignment="Center" SearchService="TargetLocationSearch" />
+            <Label Name="TargetLocation" 
+                   Content="{x:Static resources:Text.TargetLocation}" 
+                   VerticalAlignment="Center" HorizontalAlignment="Center" 
+                   Width="Auto"/>
+            <controls:TargetLocation x:Name="DestinationFolder" 
+                                     VerticalAlignment="Center" 
+                                     SearchService="TargetLocationSearch" 
+                                     KeyboardNavigation.TabIndex="4"/>
         </DockPanel>
 
         <Grid Grid.Row="5" Grid.Column="0" Margin="0 10" Grid.ColumnSpan="4">
@@ -60,8 +107,22 @@
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" Content="Install" VerticalAlignment="Center" Width="Auto" HorizontalAlignment="Right" Margin="10 0" IsDefault="True" Command="{Binding InstallPackageCommand}" />
-            <Button Grid.Column="2" Content="Cancel" VerticalAlignment="Center" Width="Auto" HorizontalAlignment="Right" Margin="0 0 10 0" IsCancel="True" />
+            <Button Grid.Column="1" 
+                    Content="Install" 
+                    VerticalAlignment="Center" 
+                    Width="Auto" 
+                    HorizontalAlignment="Right" 
+                    Margin="10 0" IsDefault="True" 
+                    Command="{Binding InstallPackageCommand}" 
+                    KeyboardNavigation.TabIndex="5"/>
+            <Button Grid.Column="2" 
+                    Content="Cancel" 
+                    VerticalAlignment="Center" 
+                    Width="Auto" 
+                    HorizontalAlignment="Right" 
+                    Margin="0 0 10 0" 
+                    IsCancel="True" 
+                    KeyboardNavigation.TabIndex="6"/>
         </Grid>
 
     </Grid>

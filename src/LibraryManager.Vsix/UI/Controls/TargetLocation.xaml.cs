@@ -67,23 +67,13 @@ namespace Microsoft.Web.LibraryManager.Vsix.UI.Controls
             {
                 _text = (string)GetValue(TextProperty);
 
-                //if (TargetLocationSearchTb != null)
-                //{
-                //    if (String.IsNullOrWhiteSpace(_text)) {
-                //        TargetLocationSearchTb.Text = InstallationFolder.DestinationFolder;
-                //    }
-                //    else
-                //    {
-                //        TargetLocationSearchTb.Text = _text;
-                //    }           
-                //}
-
-                if (string.IsNullOrEmpty(_text))
+                // Pre populate textBox with folder name
+                if (_text == null)
                 {
                     _text = InstallationFolder.DestinationFolder;
+                    TargetLocationSearchTb.Text = _text;
                 }
-
-                TargetLocationSearchTb.Text = _text;
+                
                 InstallationFolder.DestinationFolder = _text;
                 OnPropertyChanged("Text");
 
